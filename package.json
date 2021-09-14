@@ -1,0 +1,25 @@
+{
+  "name": "redocly-updater",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chapran/redocly-updater.git"
+  },
+  "author": "AC",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chapran/redocly-updater/issues"
+  },
+  "bin": {
+    "update-redocly": "./index.js"
+  },
+  "homepage": "https://github.com/chapran/redocly-updater#readme",
+  "dependencies": {
+    "yargs": "^17.1.1"
+  }
+}

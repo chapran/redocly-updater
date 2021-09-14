@@ -15,8 +15,9 @@ async function update() {
   await createBranch(p);
   child_process.execSync(`npm install ${p}@${v}`, { stdio: [0, 1, 2] }); // TODO: handle error if version or project does not exist
 
-  await commitAndPushUpdates(p, v, remoteName);
+  await commitAndPushUpdates(p, v, remoteName); // TODO: handle error if branch cannot be pushed
   await deleteBranch(p);
+  // TODO: add PR creation
 }
 
 update();

@@ -1,27 +1,22 @@
 #!/usr/bin/env node
-const fs = require("fs").promises;
 const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
+const child_process = require("child_process");
 
-const { createBranch, commitAndPushUpdates } = require("./lib/git");
+const {
+  createBranch,
+  commitAndPushUpdates,
+  deleteBranch,
+} = require("./lib/git");
 
 async function update() {
   const { p, v, remoteName } = yargs(hideBin(process.argv)).argv;
 
   await createBranch(p);
-  const jsonPath = `${process.cwd()}/package.json`; // TODO: change to regular npm i command
+  child_process.execSync(`npm install ${p}@${v}`, { stdio: [0, 1, 2] }); // TODO: handle error if version or project does not exist
 
-  const pckgJson = require(jsonPath);
-
-  if (!pckgJson.dependencies) {
-    pckgJson.dependencies = {};
-  }
-
-  pckgJson.dependencies[p] = v;
-
-  await fs.writeFile(jsonPath, JSON.stringify(pckgJson, null, 2));
-
-  await commitAndPushUpdates(p, v, remoteName)
+  await commitAndPushUpdates(p, v, remoteName);
+  await deleteBranch(p);
 }
 
 update();
